@@ -41,22 +41,22 @@ def selecionar_pasta():
             # print(f"Texto: {item['Texto'][:100]}...")  # Exibe apenas os primeiros 100 caracteres
             print("-" * 50)
 
-    return dados
+    return dados, pasta_selecionada
 
 # Criar a janela principal do tkinter
 root = tk.Tk()
 root.withdraw()  # Esconder a janela principal
 
 # Abrir a caixa de diálogo para selecionar a pasta
-lista_de_pdfs = selecionar_pasta()
+lista_de_pdfs, caminho_pasta = selecionar_pasta()
 
 # Loop para iterar pelos arquivos PDFs na pasta selecionada e extrair os dados
 primeira_iteracao = True
 for pdf in lista_de_pdfs:
-    busca_dados.dados_pdf(pdf, primeira_iteracao)
+    busca_dados.dados_pdf(pdf, primeira_iteracao, caminho_pasta)
     primeira_iteracao = False  # Após a primeira iteração, define como False
 
-arquivo_excel = 'censo_internados.xlsx'
+arquivo_excel = f'{caminho_pasta}/censo_internados.xlsx'
 
 # Ajustar larguda das colunas do arquivo Excel Gerado
 ajuste_largura_coluna.formatar_excel(arquivo_excel)

@@ -202,9 +202,9 @@ def extrair_dados(pdf_path):
             "TIPO DE INTERNAÇÃO": tipo_internacao,
             "CARÁTER": carater,
             "Beneficiário Atendido": beneficiario,
-            "ACOMODAÇÃO": "APARTAMENTO",  # Acomodação fixa
             "PRESTADOR": prestador,
             "CNPJ": "77.658.611/0001-08",
+            "ACOMODAÇÃO": "APARTAMENTO",  # Acomodação fixa
             "DATA DA ADMISSÃO": data_admissao,
             "DATA DA ALTA": data_alta,
             "MOTIVO DA INTERNAÇÃO": motivo
@@ -226,11 +226,11 @@ def selecionar_arquivo():
     return caminho_arquivo
 
 
-def dados_pdf(pdf_path, primeira_iteracao):
+def dados_pdf(pdf_path, primeira_iteracao, caminho_pasta):
     # pdf_path = selecionar_arquivo()
     tabela = extrair_dados(pdf_path)
     if not tabela.empty:
-        excel_path = "censo_internados.xlsx"
+        excel_path = f'{caminho_pasta}/censo_internados.xlsx'
 
         if primeira_iteracao:
             # Na primeira iteração, cria ou sobrescreve o arquivo
