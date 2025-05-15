@@ -207,7 +207,8 @@ def extrair_dados(pdf_path):
             "ACOMODAÇÃO": "APARTAMENTO",  # Acomodação fixa
             "DATA DA ADMISSÃO": data_admissao,
             "DATA DA ALTA": data_alta,
-            "MOTIVO DA INTERNAÇÃO": motivo
+            "MOTIVO DA INTERNAÇÃO": motivo,
+            "Caminho Arquivo": pdf_path
         })
 
     # Remover duplicatas

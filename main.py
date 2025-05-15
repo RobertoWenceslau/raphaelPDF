@@ -36,6 +36,7 @@ def selecionar_pasta():
 
         # Exibir os dados extraídos
         print("\033[33m\nArquivos identificados na Pasta informada: \033[m\n")
+        print(f'Quantidade de arquivos identificados: {len(dados)}\n')
         for item in dados:
             print(f"Arquivo: {item}")
             # print(f"Texto: {item['Texto'][:100]}...")  # Exibe apenas os primeiros 100 caracteres
