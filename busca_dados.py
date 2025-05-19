@@ -9,7 +9,9 @@ from openpyxl import load_workbook
 
 
 # Carregar a tabela de CIDs
-cid_mapping = pd.read_csv("cid_mapping.csv", sep=";", encoding="ISO-8859-1")
+cid_mapping = pd.read_csv("cid_mapping2.csv", sep=",", encoding="ISO-8859-1")
+print(cid_mapping.columns)
+
 cid_dict = dict(zip(cid_mapping["SUBCAT"], cid_mapping["DESCRICAO"]))
 
 
@@ -89,6 +91,7 @@ def extrair_dados(pdf_path):
         # Processar apenas a primeira página
         page = pdf.pages[0]
         texto = page.extract_text()
+        print(texto, "\n\n")
 
         # Verificar se o texto foi extraído corretamente
         if texto is None:
@@ -170,9 +173,18 @@ def extrair_dados(pdf_path):
             # Verificar se há alguma UTI no registro de diárias
             tem_uti = any("UTI" in d["tipo"].upper() for d in diarias_com_datas)
 
-            # Se houver UTI ou palavras-chave de urgência, é URGÊNCIA
-            if tem_uti or "URGENTE" in texto.upper() or "EMERGÊNCIA" in texto.upper():
-                carater = "URGENCIA"
+            # Encontrar a linha com "Carater de Atendimento"
+            padrao = r"Carater de Atendimento*\n(Atendimento\s.+)"
+            match = re.search(padrao, texto)
+
+            if match:
+                carater = match.group(1).replace("Carater de Atendimento ", "")  # Remover "Carater de Atendimento"
+                print(carater)
+            else:
+                print("Nenhuma correspondência encontrada.")
+
+            # if tem_uti or "URGENTE" in texto.upper() or "EMERGÊNCIA" in texto.upper():
+            #     carater = "URGENCIA"
 
         # Inferir TIPO DE INTERNAÇÃO com base nos procedimentos
         procedimentos_cirurgicos = ["CATETERISMO", "CIRURGIA", "RESSECÇÃO", "TAXA DE SALA CIRÚRGICA",
